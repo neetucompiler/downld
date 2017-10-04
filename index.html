@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ChatBot</title>
+
+  <link href="vendors/reset-css/reset.css" rel="stylesheet">
+  <link href="css/roboto.css" rel="stylesheet">
+  <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet prefetch">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/datepicker.css" rel="stylesheet">
+  <link href="vendors/ResponsiveSlides/responsiveslides.css" rel="stylesheet">
+
+  <script src="vendors/jquery/dist/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <div class="chatBot">
+    <div class="helpTextPopOver animated bounce" style="display: block;">We are glad to assist you !!</div>
+    <div class="chat" id="chatbox">
+      <div class="chat-title">
+        <h1>Thai Bot</h1>
+        <h2>Your BI Assistant</h2>
+        <figure class="avatar">
+          <img src="images/chat-logo.png" alt="logo">
+        </figure>
+        <button class="chat-minmax" id="minim-chat" style="display: none;"><i class="fa fa-minus fa-lg" aria-hidden="true"></i></button>
+        <button class="chat-minmax" id="maxi-chat"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></button>
+      </div>
+      <!-- <div class="top-menu-bar"> 
+      <button class="tooltip" onclick="faqBtnClick()">
+        <i class="fa fa-2x fa-question-circle" aria-hidden="true"></i>
+        <span class="tooltiptext tooltip-bottom">FAQ's</span>
+      </button>
+      <button class="tooltip" onclick="helpdeskBtnClick()">
+        <i class="fa fa-2x fa-info" aria-hidden="true"></i>
+        <span class="tooltiptext tooltip-bottom">HelpDesk Contact</span>
+      </button>
+      <button class="tooltip" onclick="searchBtnClick()">
+        <i class="fa fa-2x fa-search" aria-hidden="true"></i>
+        <span class="tooltiptext tooltip-bottom">Search</span>
+      </button>
+      <button class="tooltip" onclick="announcementBtnClick()">
+        <i class="fa fa-2x fa-bullhorn" aria-hidden="true"></i>
+        <span class="tooltiptext tooltip-bottom">Announcements</span>
+      </button>
+      </div> -->
+      <div class="messages">
+        <div class="messages-content"></div>
+      </div>
+      <div class="helpdesk" style="display: none;">
+        <div class="helpdesk-content">
+          <div class="chat-content-holder">
+            <button class="backToChatBtn" onclick="backToChatBtnClick()">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          Back to Chat
+          </button>
+            <hr class="chat-hr" style="	position: relative; top: 5px;">
+            <div class="chat-content">
+              <h1>Helpdesk</h1>
+              <hr class="chat-hr">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="announcements" style="display: none;">
+        <div class="announcements-content">
+          <div class="chat-content-holder">
+            <button class="backToChatBtn" onclick="backToChatBtnClick()">
+						<i class="fa fa-chevron-left" aria-hidden="true"></i>
+						Back to Chat
+						</button>
+            <hr class="chat-hr" style="	position: relative; top: 5px;">
+            <div class="chat-content">
+              <h1>Announcements</h1>
+              <hr class="chat-hr">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="search" style="display: none;">
+        <div class="search-content">
+          <div class="chat-content-holder">
+            <button class="backToChatBtn" onclick="backToChatBtnClick()">
+							<i class="fa fa-chevron-left" aria-hidden="true"></i> Back to Chat
+						</button>
+            <hr class="chat-hr" style="	position: relative; top: 5px;">
+            <div class="chat-content">
+              <h1>Search</h1>
+              <hr class="chat-hr">
+              <div class="chat-search">
+                <input id="chat-search" class="chat-search-box" placeholder="Search Countries" />
+                <span class="fa fa-search"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feedback-bar">
+        <span>
+					Terminate the chat by <button class="end-chat">End chat</button>
+				</span>
+      </div>
+      <form id="generalForm" class="message-box">
+        <div id="sound"></div>
+        <input id="userInputText" type="text" class="message-input" placeholder="Type message...">
+        <span id="userInputVoice">
+					<button type="button" id="enabledVoiceBtn" class="voice-btn">
+						<i style="color: white;" class="fa fa-2x fa-microphone" aria-hidden="true"></i>
+					</button>
+					<button type="button" id="disabledVoiceBtn" class="voice-btn" style="display:none; cursor:not-allowed" disabled>
+						<i style="color: #aaa;" class="fa fa-2x fa-microphone-slash" aria-hidden="true"></i>
+					</button>
+				</span>
+        <button id="userInputSubmit" type="submit" class="message-submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="templates">
+    <div id="feedbackTemplate">
+      <div class="message new">
+        <figure class="avatar"><img src="images/chat-icon.png" /></figure>
+        Please provide a feedback
+        <br>
+        <img class="chatBtn emoji" src="images/poor.png" isactive="false" rating="1">
+        <img class="chatBtn emoji" src="images/bad.png" isactive="false" rating="2">
+        <img class="chatBtn emoji" src="images/okay.png" isactive="false" rating="3">
+        <img class="chatBtn emoji" src="images/good.png" isactive="false" rating="4">
+        <img class="chatBtn emoji jqactive" src="images/happy.png" isactive="false" rating="5">
+        <br>
+        <table>
+          <tr>
+            <td> Enter your comments: </td>
+            <td>
+              <textarea id="comment" name="comments" placeholder="Please enter your comments here"></textarea>
+            </td>
+          </tr>
+        </table>
+        <input class="chatBtn" id="send_feedback" type="submit" value="Send">
+      </div>
+    </div>
+    <div id="audioTemplate">
+      <div>
+        <div class="message new audioTemplate">
+          <figure class="avatar">
+            <img src="images/chat-icon.png">
+          </figure>
+          <audio class="audioCard" controls preload="none">
+						<source type="audio/mpeg" :|attr|:=":|attrVal|:">
+						Your browser does not support the audio tag.
+					</audio>
+          <br>
+          <i class="fa fa-thumbs-down" aria-hidden="true" isselected="false"></i>
+          <i class="fa fa-thumbs-up" aria-hidden="true" isselected="false"></i>
+        </div>
+      </div>
+    </div>
+    <div id="videoTemplate">
+      <div>
+        <div class="message new videoTemplate">
+          <figure class="avatar">
+            <img src="images/chat-icon.png">
+          </figure>
+          <video controls preload="none" width="100%" height="auto">
+						<source type="video/mp4" :|attr|:=":|attrVal|:">
+						Your browser does not support the video tag.
+					</video>
+          <br>
+          <i class="fa fa-thumbs-down" aria-hidden="true" isselected="false"></i>
+          <i class="fa fa-thumbs-up" aria-hidden="true" isselected="false"></i>
+        </div>
+      </div>
+    </div>
+    <div id="highChartTemplate">
+      <div>
+        <div class="message new">
+          <figure class="avatar">
+            <img src="images/chat-icon.png">
+          </figure>
+          :|#highChart|:
+          <div class="highCharts" id=":|chartContainer|:">
+          </div>
+          :|/highChart|:
+          <i class="fa fa-thumbs-down" aria-hidden="true" isselected="false"></i>
+          <i class="fa fa-thumbs-up" aria-hidden="true" isselected="false"></i>
+        </div>
+      </div>
+    </div>
+    <div id="normalMessage">
+      <div>
+        <div class="message new">
+          <figure class="avatar">
+            <img src="images/chat-icon.png">
+          </figure>
+          <div class="botmessage">:|message|:
+          </div>
+          <i class="fa fa-thumbs-down" aria-hidden="true" isselected="false"></i>
+          <i class="fa fa-thumbs-up" aria-hidden="true" isselected="false"></i>
+        </div>
+      </div>
+    </div>
+    <div id="statMessage">
+      <div>
+        <div class="message new">
+          <figure class="avatar">
+            <img src="images/chat-icon.png" />
+          </figure>
+          <div class="botmessage">:|message|:
+          </div>
+          <div class="botValue">
+            <span class="actualValue">:|actualValue|:</span><br/>
+            <span class="targetValue">:|targetValue|:</span><br/>
+            <span class="compareValue">
+						:|#positive|:<i class="green"><i class="fa fa-sort-asc"></i>:|compareValue|:% </i>:|compareText|::|/positive|: 
+						:|^positive|:<i class="red"><i class="fa fa-sort-desc"></i>:|compareValue|:%</i>:|compareText|::|/positive|:
+						</span><br/>
+            <span id="container-speed" style="width: 200px !important; min-height: 400px; max-height:500px; margin: 0 auto;"></span>
+          </div>
+          <i class="fa fa-thumbs-down" aria-hidden="true" isselected="false"></i>
+          <i class="fa fa-thumbs-up" aria-hidden="true" isselected="false"></i>
+        </div>
+      </div>
+    </div>
+    <div id="choicesMessage">
+      <div>
+        <div class="message new">
+          <figure class="avatar">
+            <img src="images/chat-icon.png">
+          </figure>
+          <div class="botmessage">:|message|:
+          </div>
+        </div>
+        :|{choices}|:
+      </div>
+    </div>
+    <div id="parentCard">
+      <div class="message new parentCard">
+        <figure class="avatar">
+          <img src="images/chat-icon.png">
+        </figure>
+      </div>
+    </div>
+    <div id="imageCard">
+      <div>
+        <div class="imageCard">
+          <img :|attr|:=":|attrVal|:" />
+        </div>
+      </div>
+    </div>
+    <div id="buttonCard">
+      <div class="cardBtnHolder">
+        :|#button|: <button class="cardBtn"> :|.|: </button>:|/button|:
+      </div>
+    </div>
+    <div class="titleCard">
+      <div>
+        <div class="titleCardText">
+          :|titlemsg|:
+        </div>
+        <hr>
+      </div>
+    </div>
+    <div class="valueCard">
+      <div>
+        <div class="valueCardText">
+          :|titlemsg|:
+        </div>
+      </div>
+    </div>
+    <div id="audioCard">
+      <div>
+        <audio class="audioCard" controls preload="none">
+        <source type="audio/mpeg" :|attr|:=":|attrVal|:">
+        Your browser does not support the audio tag.
+      </audio>
+      </div>
+    </div>
+    <div id="flightMessage">
+      <div>
+        <div class="message new">
+          <figure class="avatar">
+            <img src="images/icon.png" />
+          </figure>
+          <div class="botmessage">
+            <span>Flight total fare :  {{fare}} </span><br />
+            <span>Total flight duration :  {{duration}} </span><br />
+            <span>Flight code :  {{fcode}} </span></br>
+            <span> Arrival Time: {{arrt}} </span></br>
+            <span> Departure Time: {{dept}} </span></br>
+            <span>Origin :{{origin}}</span> </br>
+            <span> Destination : {{desti}} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="videoCard">
+      <div>
+        <video controls preload="none" width="100%" height="auto">
+        <source type="video/mp4" :|attr|:=":|attrVal|:">
+        Your browser does not support the video tag.
+      </video>
+      </div>
+    </div>
+    <div id="highChartCard">
+      <div>
+        :|#highChart|:
+        <div class="highCharts" id=":|chartContainer|:" width="400">
+        </div>
+        :|/highChart|:
+      </div>
+    </div>
+  </div>
+
+  <script src="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js" type="text/javascript"></script>
+  <script src="vendors/mustache.js/mustache.min.js" type="text/javascript"></script>
+  <script src="vendors/ResponsiveSlides/responsiveslides.min.js" type="text/javascript"></script>
+  <script src="vendors/socket.io-client/dist/socket.io.js"></script>
+  <script src="vendors/highcharts/highcharts.js" type="text/javascript"></script>
+  <script src="vendors/highcharts/highcharts-more.js" type="text/javascript"></script>
+  <script src="vendors/highcharts/modules/drilldown.js" type="text/javascript"></script>
+  <script src="vendors/highcharts/modules/solid-gauge.js" type="text/javascript"></script>
+
+  <script src="js/index.js" type="text/javascript"></script>
+</body>
+
+</html>
